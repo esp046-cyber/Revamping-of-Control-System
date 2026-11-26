@@ -1,4 +1,125 @@
-{"id":"./","name":"Aradet SCADA Revamp - PCS 7 Execution Guide","short_name":"Aradet PCS7","description":"SCADA engineer step-by-step execution guide for the Alkylation and Aromatic control system revamp (Aradet, Iraq).","start_url":"./","scope":"./","display":"standalone","orientation":"any","background_color":"#14181d","theme_color":"#14181d","categories":["productivity","utilities","education"],
-"icons":[{"src":"./icons/icon-72.png","sizes":"72x72","type":"image/png","purpose":"any"},{"src":"./icons/icon-96.png","sizes":"96x96","type":"image/png","purpose":"any"},{"src":"./icons/icon-128.png","sizes":"128x128","type":"image/png","purpose":"any"},{"src":"./icons/icon-144.png","sizes":"144x144","type":"image/png","purpose":"any"},{"src":"./icons/icon-152.png","sizes":"152x152","type":"image/png","purpose":"any"},{"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"./icons/icon-384.png","sizes":"384x384","type":"image/png","purpose":"any"},{"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"./icons/icon-maskable-192.png","sizes":"192x192","type":"image/png","purpose":"maskable"},{"src":"./icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],
-"screenshots":[{"src":"./screenshots/screenshot-wide.png","sizes":"1280x720","type":"image/png","form_factor":"wide"},{"src":"./screenshots/screenshot-narrow.png","sizes":"540x720","type":"image/png","form_factor":"narrow"}],
-"shortcuts":[{"name":"Execution Phases","url":"./#phases","icons":[{"src":"./icons/icon-96.png","sizes":"96x96"}]},{"name":"Failover Simulator","url":"./#sim","icons":[{"src":"./icons/icon-96.png","sizes":"96x96"}]},{"name":"SAT Checklists","url":"./#checks","icons":[{"src":"./icons/icon-96.png","sizes":"96x96"}]}]}
+{
+ "id": "/Revamping-of-Control-System-for-Al-Kayltion-and-Aromatic-Client/",
+ "name": "Aradet SCADA Revamp - PCS 7 Execution Guide",
+ "short_name": "Aradet PCS7",
+ "description": "SCADA engineer step-by-step execution guide for the Alkylation and Aromatic control system revamp (Aradet, Iraq).",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#14181d",
+ "theme_color": "#14181d",
+ "categories": [
+  "productivity",
+  "utilities",
+  "education"
+ ],
+ "icons": [
+  {
+   "src": "./icons/icon-72.png",
+   "sizes": "72x72",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-96.png",
+   "sizes": "96x96",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-128.png",
+   "sizes": "128x128",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-144.png",
+   "sizes": "144x144",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-152.png",
+   "sizes": "152x152",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-384.png",
+   "sizes": "384x384",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "./icons/icon-maskable-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "maskable"
+  },
+  {
+   "src": "./icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "screenshots": [
+  {
+   "src": "./screenshots/screenshot-wide.png",
+   "sizes": "1280x720",
+   "type": "image/png",
+   "form_factor": "wide"
+  },
+  {
+   "src": "./screenshots/screenshot-narrow.png",
+   "sizes": "540x720",
+   "type": "image/png",
+   "form_factor": "narrow"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Execution Phases",
+   "url": "./#phases",
+   "icons": [
+    {
+     "src": "./icons/icon-96.png",
+     "sizes": "96x96"
+    }
+   ]
+  },
+  {
+   "name": "Failover Simulator",
+   "url": "./#sim",
+   "icons": [
+    {
+     "src": "./icons/icon-96.png",
+     "sizes": "96x96"
+    }
+   ]
+  },
+  {
+   "name": "SAT Checklists",
+   "url": "./#checks",
+   "icons": [
+    {
+     "src": "./icons/icon-96.png",
+     "sizes": "96x96"
+    }
+   ]
+  }
+ ]
+}
