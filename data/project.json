@@ -1,0 +1,415 @@
+{
+ "projectId": "aradet_2026",
+ "title": "Revamping of Control System for Alkylation and Aromatic",
+ "shortTitle": "Aradet PCS 7 Revamp",
+ "client": "Aradet (The Arab Company for Detergent Chemicals)",
+ "location": "Iraq",
+ "phases": [
+  {
+   "title": "Site survey, legacy audit and I/O freeze",
+   "steps": [
+    "Collect as-built loop drawings, cause-and-effect charts and P&IDs for the Alkylation and Aromatic units; log revision status.",
+    "Walk down marshalling and RIO cabinets; check terminal numbers and cable tags against loop drawings; record discrepancies.",
+    "Export the legacy DCS/PLC I/O list; map each signal to a PCS 7 channel with type, range and engineering unit.",
+    "Extract existing CFC/SFC charts and control logic; classify each as migrate, rewrite or retire.",
+    "Freeze the tag and I/O lists under change control; issue revision A as the migration baseline.",
+    "Check hazardous-area loops: IS barrier or isolator rating, entity parameters, cable capacitance and inductance.",
+    "Record the legacy network: PROFIBUS addresses, baud rate, repeaters, IP plan and VLANs.",
+    "Back up legacy projects, configurations and historian data to offline media; checksum and sign off.",
+    "Identify trip and critical loops; agree bypass, override and forcing rules with operations.",
+    "Hold a survey review covering risks, outage windows, spares and long-lead items; get client approval of the freeze."
+   ]
+  },
+  {
+   "title": "Hardware engineering and panel integration",
+   "steps": [
+    "Create the multiproject in SIMATIC Manager; define the plant hierarchy for each unit.",
+    "In HW Config insert the S7-410H station with two racks; set rack numbers 0 and 1 and CPU firmware per the PCS 7 release matrix.",
+    "Insert sync modules and connect two fiber sync links between the CPUs; route the cables separately.",
+    "Insert a CP 443-5 Extended per CPU as DP master and a CP 443-1 with fixed IP addresses.",
+    "Set H-system parameters: cycle monitoring time, minimum I/O retention time and maximum communication delay.",
+    "Configure remote I/O stations (ET 200M with IM 153-2, or ET 200SP HA) with redundant interface modules.",
+    "Assign every module and channel; enable diagnostic, wire-break and short-circuit alarms.",
+    "Design redundant 24 VDC supplies with redundancy modules or diodes; add supply monitoring to diagnostics.",
+    "Build and inspect panels: wiring, ferrules, torque, shield terminations, earthing and labels per drawings.",
+    "Run pre-power checks: insulation test, continuity, supply polarity and segregation of IS circuits.",
+    "Compile HW Config, run the consistency check and archive the project revision."
+   ]
+  },
+  {
+   "title": "Redundant PROFIBUS DP and network management",
+   "steps": [
+    "Define redundant DP master systems: CP 443-5 Ext in Rack 0 drives Line A, Rack 1 drives Line B.",
+    "Allocate PROFIBUS addresses (masters 1-2, slaves from 3); freeze the address table and check for duplicates.",
+    "Set baud rate by segment length: 12 Mbps up to 100 m, 1.5 Mbps up to 200 m on type A cable; use the same DP bus profile in all nodes.",
+    "Configure Y-Links for single-channel devices; verify both IM 153-2 interfaces and the subordinate DP subnet address.",
+    "Fit terminators at segment ends only, powered; add repeaters or OLMs where segment limits require.",
+    "Test cables with a bus tester: continuity, shield, A/B swap and terminated-segment resistance (about 110 ohm), before connecting devices.",
+    "Run a live-list scan; confirm every station is present and record signal quality.",
+    "Configure the SCALANCE MRP ring: one manager, all others clients; set the recovery time per specification.",
+    "Configure SINEC NMS: discover topology, add devices, set SNMPv3 credentials, thresholds and trap receivers.",
+    "Harden the network: disable unused ports and services, enable port security, replace default credentials.",
+    "Back up switch configurations and record firmware versions."
+   ]
+  },
+  {
+   "title": "PCS 7 AS/OS and redundant SCADA engineering",
+   "steps": [
+    "Create the PCS 7 library and import the required APL version; compare with legacy using Version Cross Manager.",
+    "Define the plant hierarchy and technological names; create process tag types for repeated equipment.",
+    "Migrate CFC charts: instantiate APL blocks, connect I/O through channel drivers, set runtime groups and OB cycles.",
+    "Migrate SFC sequences; verify steps, transitions, interlocks and operator modes.",
+    "Compile the AS and clear all messages; download in STOP to the first CPU, then bring up redundancy.",
+    "Configure the OS servers: OS project editor, partner server for OS_SRV_B, redundancy and archive synchronization.",
+    "Set up Tag Logging and Alarm Logging: archives, sizes, message classes and horn assignment.",
+    "Build Alkylation and Aromatic graphics: P&IDs, faceplates, navigation and trend groups.",
+    "Generate server data and load it on each OS client; test every client against both servers.",
+    "Configure time synchronization: NTP or SICLOCK as master for the AS and OS.",
+    "Configure user roles and authorization levels with SIMATIC Logon; test operator rights.",
+    "Back up the AS and OS projects and tag them as the FAT baseline."
+   ]
+  },
+  {
+   "title": "FAT and iFAT",
+   "steps": [
+    "Prepare the FAT procedure, I/O simulators, test equipment and witness sign-off sheets.",
+    "Simulate 100% of AI, AO, DI and DO channels per the I/O list, including ranges and alarms.",
+    "Test CFC/SFC logic: interlocks, trip matrix, sequence steps and fault handling.",
+    "Force CPU-0 to STOP and measure the output disturbance; accept switchover under 50 ms with no bump.",
+    "Reverse the test (master to CPU-1 and back); confirm resync and that REDF clears.",
+    "Remove one sync fiber; confirm the system stays redundant on the other link and diagnostics are raised.",
+    "Break PROFIBUS Line A, then Line B; confirm no slave drops and diagnostic alarms appear.",
+    "Fail OS Server A, then B: check client reconnection, alarm continuity and archive sync after restart.",
+    "Break one MRP ring link; confirm recovery within the configured time and the NMS trap.",
+    "Remove one 24 VDC feed; confirm no loss of function and a supply alarm.",
+    "Stop the NTP/SICLOCK master; verify behaviour and recovery of time synchronization.",
+    "Close the punch list, freeze the FAT software, create the SAT baseline and archive."
+   ]
+  },
+  {
+   "title": "Hot cutover, loop checking and SAT",
+   "steps": [
+    "Issue a cutover method statement per unit with a rollback plan and decision points.",
+    "Obtain permits, lock-out and isolation certificates; hold a toolbox talk with operations.",
+    "Install and power the new cabinets; validate supplies and communications before touching field wiring.",
+    "Tie in in order: spare loops, non-critical loops, then critical loops, one group at a time.",
+    "Cut over cross-wiring at marshalling loop by loop; label and photograph each change.",
+    "Loop check end to end: 4-20 mA with a calibrator, HART communicator checks, digital inputs and outputs.",
+    "Verify alarm limits, scaling and failure states (open circuit, short circuit) per loop.",
+    "Verify interlocks and the trip matrix on the live plant under operations supervision.",
+    "Repeat key redundancy tests on site: CPU, PROFIBUS, OS server and ring.",
+    "Run the 72-hour reliability test; log alarms, diagnostics and redundancy events with none unexplained.",
+    "Train operators; hand over documents, backups, credentials, spares and as-built drawings.",
+    "Obtain SAT and handover sign-off from Aradet."
+   ]
+  }
+ ],
+ "checklists": [
+  {
+   "group": "PROFIBUS physical layer",
+   "items": [
+    {
+     "item": "Bus termination resistance",
+     "accept": "Power off, A-B at segment end reads about 110 ohm with both terminators fitted"
+    },
+    {
+     "item": "Terminator placement",
+     "accept": "Powered terminators ON at the two segment ends only"
+    },
+    {
+     "item": "Baud rate and bus profile",
+     "accept": "Identical in all nodes; 1.5 Mbps up to 200 m, 12 Mbps up to 100 m per segment"
+    },
+    {
+     "item": "Segment length",
+     "accept": "Within the limit for the baud rate; repeaters counted as segments"
+    },
+    {
+     "item": "Address table",
+     "accept": "No duplicates; matches HW Config; masters 1-2"
+    },
+    {
+     "item": "Shield grounding",
+     "accept": "Shield clamped 360 degrees at each connector; continuity to earth bar"
+    },
+    {
+     "item": "Signal quality",
+     "accept": "Bus tester shows no error telegrams and no reflections"
+    },
+    {
+     "item": "Live list",
+     "accept": "All configured slaves in data exchange; no diagnostics"
+    },
+    {
+     "item": "A/B core wiring",
+     "accept": "Red/green not swapped; continuity verified per core"
+    }
+   ]
+  },
+  {
+   "group": "S7-410H redundancy sync",
+   "items": [
+    {
+     "item": "Sync fiber attenuation",
+     "accept": "Measured loss within the sync module datasheet budget; connectors cleaned"
+    },
+    {
+     "item": "Sync link status",
+     "accept": "Both links up; IFM1F and IFM2F off"
+    },
+    {
+     "item": "Rack numbers",
+     "accept": "RACK0 and RACK1 LEDs match HW Config"
+    },
+    {
+     "item": "Roles after power cycle",
+     "accept": "One CPU master (MSTR on), one standby, REDF off"
+    },
+    {
+     "item": "Switchover time",
+     "accept": "Under 50 ms; outputs without bump; measured with a scope"
+    },
+    {
+     "item": "Firmware versions",
+     "accept": "Identical on both CPUs; matches the PCS 7 release matrix"
+    },
+    {
+     "item": "Program match",
+     "accept": "Load and work memory identical; consistency check passed"
+    },
+    {
+     "item": "H-system parameters",
+     "accept": "Cycle monitoring, min I/O retention time, communication delay as designed"
+    },
+    {
+     "item": "Power redundancy",
+     "accept": "Either 24 VDC feed off: no CPU restart; supply alarm raised"
+    }
+   ]
+  },
+  {
+   "group": "PCS 7 server/client redundancy",
+   "items": [
+    {
+     "item": "OS server redundancy",
+     "accept": "OS_SRV_A and OS_SRV_B show redundant in the redundancy editor"
+    },
+    {
+     "item": "Client failover",
+     "accept": "Clients switch to the partner within the design time; views recover"
+    },
+    {
+     "item": "Alarm continuity",
+     "accept": "Active alarms and acknowledgement state preserved after switch"
+    },
+    {
+     "item": "Archive synchronization",
+     "accept": "After a server restart the archive gap is backfilled; values equal"
+    },
+    {
+     "item": "Time synchronization",
+     "accept": "NTP/SICLOCK source healthy; AS-OS deviation within spec (e.g. under 1 s)"
+    },
+    {
+     "item": "Server data",
+     "accept": "Latest server data loaded on every client; no version mismatch"
+    },
+    {
+     "item": "User rights",
+     "accept": "Operator, supervisor and engineer roles tested and logged"
+    },
+    {
+     "item": "Backup and restore",
+     "accept": "Backup done and restore tested on a spare disk or VM"
+    }
+   ]
+  },
+  {
+   "group": "NMS and cybersecurity",
+   "items": [
+    {
+     "item": "MRP ring",
+     "accept": "One manager; ring closed; recovery within the configured time (e.g. 200 ms)"
+    },
+    {
+     "item": "NMS discovery",
+     "accept": "All devices discovered; topology matches drawings"
+    },
+    {
+     "item": "SNMP",
+     "accept": "SNMPv3 enabled; default communities removed; traps reach NMS"
+    },
+    {
+     "item": "Unused ports",
+     "accept": "Disabled; port security active"
+    },
+    {
+     "item": "Credentials",
+     "accept": "Default passwords changed; stored in the client vault"
+    },
+    {
+     "item": "Services",
+     "accept": "HTTP and Telnet disabled; HTTPS and SSH only"
+    },
+    {
+     "item": "Firmware",
+     "accept": "Approved version on all switches; version log recorded"
+    },
+    {
+     "item": "Configuration backup",
+     "accept": "Switch configs saved offline; restore tested"
+    },
+    {
+     "item": "Segmentation",
+     "accept": "Plant network separated from corporate IT by firewall; rules documented"
+    }
+   ]
+  }
+ ],
+ "runbook": [
+  {
+   "title": "PROFIBUS and OB diagnostics",
+   "rows": [
+    [
+     "OB82",
+     "Diagnostic interrupt: channel or module fault. Read the diagnostic buffer or SFC 13; fix wire break, short or module."
+    ],
+    [
+     "OB83",
+     "Module inserted or removed. Verify type, reseat, and confirm parameters were reloaded."
+    ],
+    [
+     "OB86",
+     "Rack or DP station failure. Check slave power, connector, terminator and address."
+    ],
+    [
+     "OB122",
+     "I/O access error. Check address, slot and bus; read the start information of the OB."
+    ],
+    [
+     "OB70",
+     "I/O redundancy error (H). Check the DP line and IM 153-2 on the lost path."
+    ],
+    [
+     "OB72",
+     "CPU redundancy error. Check sync links, then the diagnostic buffer for the cause."
+    ],
+    [
+     "OB121",
+     "Programming error. Find the called block in the start information and correct it."
+    ]
+   ]
+  },
+  {
+   "title": "S7-410H LED states",
+   "rows": [
+    [
+     "RUN on, MSTR on, REDF off",
+     "Master CPU, redundant. Normal."
+    ],
+    [
+     "RUN on, MSTR off, REDF off",
+     "Standby CPU, redundant. Normal."
+    ],
+    [
+     "REDF on",
+     "Redundancy lost. Check IFM1F/IFM2F, then versions and diagnostic buffer."
+    ],
+    [
+     "IFM1F on",
+     "Sync interface 1 fault. Check fiber, clean connectors, swap sync module."
+    ],
+    [
+     "IFM2F on",
+     "Sync interface 2 fault. Same actions as IFM1F."
+    ],
+    [
+     "EXTF on",
+     "External fault (module or field). Read diagnostic buffer and OB82 data."
+    ],
+    [
+     "INTF on",
+     "Internal fault (program or timing). Read buffer; correct program or cycle settings."
+    ],
+    [
+     "BUSF1 or BUSF2 on",
+     "Bus fault on that interface. Check cable, termination and slave power."
+    ]
+   ]
+  },
+  {
+   "title": "Redundancy sync troubleshooting",
+   "rows": [
+    [
+     "Standby stuck in STARTUP",
+     "Compare firmware and project versions; repeat link-up."
+    ],
+    [
+     "Link-up rejected",
+     "Check that load memory matches; cycle time may be too long for link-up."
+    ],
+    [
+     "Frequent resync",
+     "Check fiber bend radius and connectors; replace sync module."
+    ],
+    [
+     "Switchover over 50 ms",
+     "Review min I/O retention time, cycle time and DP bus cycle."
+    ],
+    [
+     "Unexpected switchover",
+     "Read the diagnostic buffer for hardware fault or watchdog cause."
+    ],
+    [
+     "Download in RUN refused",
+     "Compile consistently; do a full download in STOP if needed."
+    ],
+    [
+     "Outputs flicker on switchover",
+     "Check output modules, Y-Link and slave fail-safe settings."
+    ],
+    [
+     "CPU times differ",
+     "Fix time synchronization source and set time-of-day on both CPUs."
+    ]
+   ]
+  },
+  {
+   "title": "Alkylation and Aromatic loop handling",
+   "rows": [
+    [
+     "Trip and safety loops",
+     "Never bypass without approved MOC and operations sign-off."
+    ],
+    [
+     "Temperature and pressure controllers",
+     "Hold last output in manual during tie-in; confirm bumpless return."
+    ],
+    [
+     "Control valves",
+     "Verify fail action against the P&ID; test at 0, 50 and 100%."
+    ],
+    [
+     "Cutover order",
+     "Spare loops, non-critical, then critical; one group at a time."
+    ],
+    [
+     "Legacy wiring",
+     "Keep tagged and intact until SAT passes."
+    ],
+    [
+     "Analyzer loops",
+     "Check scaling with the lab; hold values during analyzer maintenance."
+    ],
+    [
+     "Hazardous-area loops",
+     "Re-verify IS barrier and entity parameters after cutover."
+    ],
+    [
+     "Rollback",
+     "Agree decision point first; reconnect legacy terminals and log it."
+    ]
+   ]
+  }
+ ]
+}
