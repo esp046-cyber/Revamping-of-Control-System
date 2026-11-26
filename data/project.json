@@ -411,5 +411,343 @@
     ]
    ]
   }
- ]
+ ],
+ "docTitle": "Aradet SCADA Revamp - PCS 7 Execution Guide",
+ "appName": "Aradet PCS7",
+ "description": "SCADA engineer step-by-step execution guide for the Alkylation and Aromatic control system revamp (Aradet, Iraq).",
+ "ioLoopsNote": "Starter example tags only. Replace with the real I/O schedule using CSV import (columns: tag, description, type AI/AO/DI/DO).",
+ "ioLoops": [
+  {
+   "tag": "FT-101",
+   "desc": "Alkylation reactor feed flow",
+   "type": "AI"
+  },
+  {
+   "tag": "PT-104",
+   "desc": "Reactor pressure",
+   "type": "AI"
+  },
+  {
+   "tag": "TT-108",
+   "desc": "Reactor outlet temperature",
+   "type": "AI"
+  },
+  {
+   "tag": "LT-110",
+   "desc": "Product separator level",
+   "type": "AI"
+  },
+  {
+   "tag": "PDT-116",
+   "desc": "Fractionation column differential pressure",
+   "type": "AI"
+  },
+  {
+   "tag": "LV-112",
+   "desc": "Separator level control valve",
+   "type": "AO"
+  },
+  {
+   "tag": "FV-114",
+   "desc": "Feed flow control valve",
+   "type": "AO"
+  },
+  {
+   "tag": "ZSC-201",
+   "desc": "XV-201 closed limit switch",
+   "type": "DI"
+  },
+  {
+   "tag": "PSHH-205",
+   "desc": "Reactor high-high pressure trip",
+   "type": "DI"
+  },
+  {
+   "tag": "YS-301A",
+   "desc": "Aromatic transfer pump run status",
+   "type": "DI"
+  },
+  {
+   "tag": "XV-201",
+   "desc": "Aromatic feed isolation valve",
+   "type": "DO"
+  },
+  {
+   "tag": "P-301A",
+   "desc": "Aromatic transfer pump run command",
+   "type": "DO"
+  }
+ ],
+ "baseUrl": "https://esp046-cyber.github.io/Revamping-of-Control-System-for-Al-Kayltion-and-Aromatic-Client/",
+ "cachePrefix": "aradet-pcs7-guide-",
+ "topology": {
+  "note": "Edit nodes, links, labels, paths, services and faults here for other topologies (S7-1500H, AVEVA). A service is lost when every path in it is blocked; one fault = BUMPLESS, two or more with service intact = DEGRADED, any service lost = CRITICAL.",
+  "viewBox": "0 0 640 400",
+  "nodeW": 140,
+  "nodeH": 52,
+  "nodes": [
+   {
+    "id": "cpu0",
+    "x": 15,
+    "y": 15,
+    "label": "S7-410H|Rack 0"
+   },
+   {
+    "id": "cpu1",
+    "x": 15,
+    "y": 120,
+    "label": "S7-410H|Rack 1"
+   },
+   {
+    "id": "ylk",
+    "x": 250,
+    "y": 68,
+    "label": "Y-Link"
+   },
+   {
+    "id": "rio",
+    "x": 485,
+    "y": 68,
+    "label": "Remote I/O"
+   },
+   {
+    "id": "sw",
+    "x": 250,
+    "y": 270,
+    "label": "SCALANCE|ring"
+   },
+   {
+    "id": "osa",
+    "x": 15,
+    "y": 230,
+    "label": "OS_SRV_A"
+   },
+   {
+    "id": "osb",
+    "x": 15,
+    "y": 320,
+    "label": "OS_SRV_B"
+   },
+   {
+    "id": "cli",
+    "x": 485,
+    "y": 230,
+    "label": "OS clients"
+   },
+   {
+    "id": "nms",
+    "x": 485,
+    "y": 320,
+    "label": "SINEC NMS"
+   }
+  ],
+  "links": [
+   {
+    "pts": "155,41 200,41 200,82 250,82",
+    "cls": "pa",
+    "path": "p0",
+    "fault": "pbA"
+   },
+   {
+    "pts": "390,82 485,82",
+    "cls": "pa",
+    "path": "p0",
+    "fault": "pbA"
+   },
+   {
+    "pts": "155,146 200,146 200,106 250,106",
+    "cls": "pb",
+    "path": "p1",
+    "fault": "pbB"
+   },
+   {
+    "pts": "390,106 485,106",
+    "cls": "pb",
+    "path": "p1",
+    "fault": "pbB"
+   },
+   {
+    "pts": "85,172 290,270",
+    "cls": "eth"
+   },
+   {
+    "pts": "155,256 250,290",
+    "cls": "eth"
+   },
+   {
+    "pts": "155,346 250,304",
+    "cls": "eth"
+   },
+   {
+    "pts": "390,290 485,256",
+    "cls": "eth"
+   },
+   {
+    "pts": "390,304 485,346",
+    "cls": "eth",
+    "fault": "ring"
+   }
+  ],
+  "labels": [
+   {
+    "x": 320,
+    "y": 58,
+    "cls": "ta",
+    "path": "p0",
+    "fault": "pbA",
+    "name": "Line A",
+    "idle": "Rack 0 down"
+   },
+   {
+    "x": 320,
+    "y": 140,
+    "cls": "tb",
+    "path": "p1",
+    "fault": "pbB",
+    "name": "Line B",
+    "idle": "Rack 1 down"
+   }
+  ],
+  "paths": [
+   {
+    "id": "p0",
+    "name": "Rack 0 -> Line A",
+    "service": "io",
+    "blockedBy": [
+     "cpu0",
+     "pbA"
+    ]
+   },
+   {
+    "id": "p1",
+    "name": "Rack 1 -> Line B",
+    "service": "io",
+    "blockedBy": [
+     "cpu1",
+     "pbB"
+    ]
+   },
+   {
+    "id": "osa",
+    "name": "OS_SRV_A",
+    "service": "view",
+    "blockedBy": [
+     "osA"
+    ]
+   },
+   {
+    "id": "osb",
+    "name": "OS_SRV_B",
+    "service": "view",
+    "blockedBy": [
+     "osB"
+    ]
+   }
+  ],
+  "services": [
+   {
+    "id": "io",
+    "lossText": "Loss of I/O: neither Rack 0 (Line A) nor Rack 1 (Line B) can reach the field bus."
+   },
+   {
+    "id": "view",
+    "lossText": "Loss of view: both OS servers are offline, so no operator view or archiving."
+   }
+  ],
+  "faults": [
+   {
+    "id": "cpu0",
+    "name": "CPU-0 rack failure",
+    "hit": [
+     "cpu0"
+    ],
+    "expected": "CPU-1 takes over as master with no process upset.",
+    "steps": [
+     "Pull power on rack 0 or set CPU-0 to STOP",
+     "Confirm CPU-1 LED shows master and REDF is off",
+     "Check outputs held steady and OB72/OB82 entries logged",
+     "Restore rack 0; run resync and confirm return to redundant mode"
+    ]
+   },
+   {
+    "id": "cpu1",
+    "name": "CPU-1 rack failure",
+    "hit": [
+     "cpu1"
+    ],
+    "expected": "Rack 0 path (Line A) stays master; Line B has no controller driving it.",
+    "steps": [
+     "Pull power on rack 1 or set CPU-1 to STOP",
+     "Confirm CPU-0 stays master and the outputs hold steady",
+     "Check OB72 entries and REDF on the surviving CPU",
+     "Restore rack 1; run resync and confirm redundant mode"
+    ]
+   },
+   {
+    "id": "pbA",
+    "name": "PROFIBUS line A break",
+    "hit": [],
+    "expected": "Traffic continues on line B; diagnostic alarm raised.",
+    "steps": [
+     "Disconnect line A at an OLM or Y-Link",
+     "Confirm OB86 and OB122 diagnostics are raised",
+     "Confirm all slaves stay in data exchange on line B",
+     "Reconnect and verify redundancy restored with no stale values"
+    ]
+   },
+   {
+    "id": "pbB",
+    "name": "PROFIBUS line B break",
+    "hit": [],
+    "expected": "Line A carries all traffic; diagnostic alarm raised and redundancy reported lost.",
+    "steps": [
+     "Disconnect line B at an OLM or Y-Link",
+     "Confirm OB86/OB70 diagnostics are raised",
+     "Confirm all slaves stay in data exchange on line A",
+     "Reconnect and verify redundancy restored"
+    ]
+   },
+   {
+    "id": "osA",
+    "name": "OS Server A offline",
+    "hit": [
+     "osa"
+    ],
+    "expected": "Clients switch to OS_SRV_B; archive gap is backfilled on return.",
+    "steps": [
+     "Stop the WinCC runtime or power off OS_SRV_A",
+     "Confirm clients reconnect to OS_SRV_B",
+     "Check alarms still arrive and tag values update",
+     "Restart A; confirm archive synchronization completes"
+    ]
+   },
+   {
+    "id": "osB",
+    "name": "OS Server B offline",
+    "hit": [
+     "osb"
+    ],
+    "expected": "Clients stay on OS_SRV_A; archive gap on B is backfilled on return.",
+    "steps": [
+     "Stop WinCC runtime or power off OS_SRV_B",
+     "Confirm clients and alarms stay on OS_SRV_A",
+     "Restart B; confirm archive synchronization completes"
+    ]
+   },
+   {
+    "id": "ring",
+    "name": "SCALANCE ring port break",
+    "hit": [
+     "sw"
+    ],
+    "expected": "MRP closes the ring within the configured recovery time (bumpless only if that time is below the AS/OS communication tolerance).",
+    "steps": [
+     "Unplug one ring cable between two SCALANCE switches",
+     "Confirm MRP manager reports ring open and recovery in SINEC NMS",
+     "Verify no OS client or AS packet loss during recovery",
+     "Reconnect; confirm ring is closed and the trap clears"
+    ]
+   }
+  ]
+ }
 }
