@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aradet SCADA Revamp - PCS 7 Execution Guide</title>
+<meta name="description" content="Step-by-step SCADA engineer guide: S7-410H, redundant PROFIBUS, PCS 7 servers and NMS for the Aradet Alkylation and Aromatic revamp.">
+<meta name="theme-color" content="#14181d">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Aradet PCS7">
+<meta property="og:title" content="Aradet SCADA Revamp - PCS 7 Execution Guide"><meta property="og:description" content="Phase-by-phase execution guide, failover simulator and commissioning checklists."><meta property="og:type" content="website">
+<meta property="og:url" content="https://esp046-cyber.github.io/Revamping-of-Control-System-for-Al-Kayltion-and-Aromatic-Client/"><meta property="og:image" content="https://esp046-cyber.github.io/Revamping-of-Control-System-for-Al-Kayltion-and-Aromatic-Client/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Aradet SCADA Revamp - PCS 7 Execution Guide"><meta name="twitter:image" content="https://esp046-cyber.github.io/Revamping-of-Control-System-for-Al-Kayltion-and-Aromatic-Client/assets/og-image.png">
+<link rel="stylesheet" href="./css/styles.css"></head>
+<body>
+<header class="top"><h1>Aradet PCS 7 Revamp</h1>
+<span id="net" class="pill" role="status" aria-live="polite">Online</span>
+<button id="theme" class="btn" aria-label="Switch light or dark theme">Theme</button>
+<button id="install" class="btn amber" hidden>Install app</button></header>
+<nav class="tabs" role="tablist" aria-label="Guide sections">
+<button role="tab" data-t="phases" aria-selected="true">Phases</button><button role="tab" data-t="sim" aria-selected="false">Failover</button><button role="tab" data-t="checks" aria-selected="false">Checklists</button><button role="tab" data-t="ref" aria-selected="false">Runbook</button></nav>
+<div class="pheader"><h1>Aradet Alkylation and Aromatic DCS Revamp: commissioning checklist</h1><p>Date: ____________ Engineer: ________________ Witness: ________________</p></div>
+<main>
+<section id="phases" class="panel"><h2>Execution roadmap</h2><p class="muted">Client Aradet, Iraq. Alkylation and Aromatic units. Progress is saved on this device.</p><div class="srch"><input type="search" id="qp" placeholder="Search steps (e.g. Y-Link, MRP, 110)" aria-label="Search steps (e.g. Y-Link, MRP, 110)" autocomplete="off" enterkeyhint="search"><button class="btn" data-clr="qp" aria-label="Clear search">&times;</button></div><p id="cp" class="muted" role="status" aria-live="polite"></p><p id="prog" class="big" aria-live="polite"></p><div id="phaseList"></div></section>
+<section id="sim" class="panel" hidden><h2>Redundancy failover simulator</h2><p class="muted">Toggle one or more faults. The banner shows the combined system status.</p><div id="bnr" class="bnr ok" role="status" aria-live="polite"></div><div id="faults" class="row"></div><div class="scroll"><svg id="dia" viewBox="0 0 640 350" role="img" aria-label="Architecture diagram"></svg></div><div id="faultInfo" aria-live="polite"></div></section>
+<section id="checks" class="panel" hidden><h2>Commissioning checklists</h2><div class="row"><label>Filter <select id="flt"><option value="all">All groups</option></select></label><button id="expJ" class="btn">Export JSON</button><button id="impB" class="btn">Import JSON</button><input type="file" id="impF" accept=".json,application/json" hidden><button id="expC" class="btn">Export CSV</button><button id="prt" class="btn">Print</button><button id="rst" class="btn">Reset</button></div><div id="chkList"></div></section>
+<section id="ref" class="panel" hidden><h2>Technical reference</h2><div class="srch"><input type="search" id="qr" placeholder="Search runbook (e.g. OB86, REDF)" aria-label="Search runbook (e.g. OB86, REDF)" autocomplete="off" enterkeyhint="search"><button class="btn" data-clr="qr" aria-label="Clear search">&times;</button></div><p id="cr" class="muted" role="status" aria-live="polite"></p><div id="refList"></div></section>
+</main>
+<div id="msg" class="toast" role="status" hidden></div>
+<div id="toast" class="toast" role="alert" hidden>New guide update available. <button class="btn amber" id="reload">Reload</button></div>
+<dialog id="ios"><p>On iPhone or iPad: tap Share, then Add to Home Screen.</p><button class="btn" onclick="this.closest('dialog').close()">Close</button></dialog>
+<script src="./js/app.js"></script></body></html>
